@@ -1,31 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
-
-std::vector<std::string> split(std::string s, std::string delimiter) {
-    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-    std::string token;
-    std::vector<std::string> res;
-
-    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
-        token = s.substr(pos_start, pos_end - pos_start);
-        pos_start = pos_end + delim_len;
-        res.push_back(token);
-    }
-    
-    res.push_back(s.substr(pos_start));
-    return res;
-}
-
-int count(std::vector<int> v, int n) {
-    int result = 0;
-    for (auto a : v) {
-        if (a == n)
-            result += 1;
-    }
-    
-    return result;
-}
+#include "util.h"
 
 int solve1(std::vector<int> a, std::vector<int> b) {
     int result = 0;
@@ -43,7 +18,7 @@ int solve2(std::vector<int> a, std::vector<int> b) {
     int result = 0;
     
     for (int i = 0; i < a.size(); i++) {
-        result += a[i] * count(b, a[i]);
+        result += a[i] * utilities::count(b, a[i]);
     }
     
     return result;
@@ -58,7 +33,7 @@ int main(int argc, const char * argv[]) {
     
     std::cout << "here" << std::endl;
     while (getline(data, text)) {
-        std::vector<std::string> nums = split(text, "   ");
+        std::vector<std::string> nums = utilities::split(text, "   ");
         
         int x = stoi(nums[0]);
         int y = stoi(nums[1]);
