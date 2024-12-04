@@ -25,11 +25,39 @@ bool isSafe(const std::vector<int>& report) {
     return isIncreasing || isDecreasing;
 }
 
+bool checkAllCombinationSaftey(std::vector<int> report) {
+    if (isSafe(report)) return true;
+    
+    for (int i = 0; i < report.size(); i++) {
+        int temp = report[i];
+        report.erase(report.begin() + i);
+        if (isSafe(report))
+            return true;
+        
+        // restore the element
+        report.insert(report.begin() + i, temp);
+    }
+    
+    return false;
+}
+
 int solve1(std::vector<std::vector<int>> report) {
     int result = 0;
-    for (auto level : report)
-        if (isSafe(level))
+    for (auto level : report) {
+        if (isSafe(level)) {
             result += 1;
+        }
+    }
+    return result;
+}
+
+int solve2(std::vector<std::vector<int>> report) {
+    int result = 0;
+    for (auto level : report) {
+        if (checkAllCombinationSaftey(level)) {
+            result += 1;
+        }
+    }
     return result;
 }
 
@@ -54,6 +82,7 @@ int main(int argc, const char * argv[]) {
     data.close();
     
     std::cout << solve1(report) << std::endl;
+    std::cout << solve2(report) << std::endl;
     
     return 0;
 }
